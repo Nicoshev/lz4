@@ -386,7 +386,7 @@ static void LZ4_write_ARCH(void* memPtr, reg_t value) { *(reg_t*)memPtr = value;
 #elif defined(LZ4_FORCE_MEMORY_ACCESS) && (LZ4_FORCE_MEMORY_ACCESS==1)
 
 /* __pack instructions are safer, but compiler specific, hence potentially problematic for some compilers */
-/* currently only defined for gcc and icc */
+/* currently only defined for gcc, icc and msc */
 typedef struct LZ4_PACK({ U16 u16; }) LZ4_unalign16;
 typedef struct LZ4_PACK({ U32 u32; }) LZ4_unalign32;
 typedef struct LZ4_PACK({ reg_t uArch; }) LZ4_unalignST;
