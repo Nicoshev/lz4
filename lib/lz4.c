@@ -540,6 +540,11 @@ LZ4_memcpy_using_offset(BYTE* dstPtr, const BYTE* srcPtr, size_t length, const s
     case 4:
         r = LZ4_read32(srcPtr) * ((reg_t)0x0000000100000001ULL);
         break;
+    case 8:
+        if (sizeof(reg_t) == 8) {
+            r = LZ4_read_ARCH(srcPtr);
+            break;
+        }
     default:
         LZ4_memcpy_using_offset_base(dstPtr, srcPtr, length, offset);
         return;
@@ -2120,7 +2125,7 @@ LZ4_decompress_generic(
             if (unlikely(offset<16)) {
                 LZ4_memcpy_using_offset(op, match, length, offset);
             } else {
-                LZ4_wildCopy32(op, match, op + lengt);
+                LZ4_wildCopy32(op, match, op + length);
             }
 
             op += length;   /* wildcopy correction */
